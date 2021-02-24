@@ -1,7 +1,6 @@
 # Git Ignore File - Altium Projects
 # AllSpice
 
-Individual\ Assignment*/
 # Altium thumbnail files
 **/__Previews/
 # Altium backup archives
