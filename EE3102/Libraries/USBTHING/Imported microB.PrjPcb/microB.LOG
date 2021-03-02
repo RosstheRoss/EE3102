@@ -1,0 +1,27 @@
+Importer Log Report
+Project : microB.PrjPcb
+
+Section : Analyze Document - C:\Users\Public\Documents\Altium\Projects\EE3102\Libraries\USBTHING\microB.brd
+    Analyzing data of C:\Users\Public\Documents\Altium\Projects\EE3102\Libraries\USBTHING\microB.brd
+    Load settings
+    Load layers 126
+    Load board
+    Load Library "microbuilder"
+    Load Packages 5
+EndSection
+
+Section : Analyze Document - C:\Users\Public\Documents\Altium\Projects\EE3102\Libraries\USBTHING\microB.sch
+    Analyzing data of C:\Users\Public\Documents\Altium\Projects\EE3102\Libraries\USBTHING\microB.sch
+    Load settings
+    Load layers 126
+    Load schematic
+    Load Libraries 1
+    Load Library "microbuilder"
+    Load Packages 22
+    Load Symbols 4
+    Load DeviceSets 4
+    Load Attributes 0
+    Load Classes 1
+    Load Parts 6
+    Load Sheets 1
+EndSection
