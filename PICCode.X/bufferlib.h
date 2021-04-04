@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-    void putVal(int newValue);
+    void putVal(int Vo, int ref);
     int getAvg();
     void initBuffer();
 

@@ -25,7 +25,7 @@ volatile int adValue;
 void __attribute__((__interrupt__,__auto_psv__)) _ADC1Interrupt(void) {
     _AD1IF = 0;
     
-    putVal(ADC1BUF0);      //Grab latest sampled value after conversion and place it in buffer
+    putVal(ADC1BUF0, ADC1BUF1);      //Grab latest sampled value after conversion and place it in buffer
 }
 
 void __attribute__((__interrupt__,__auto_psv__)) _T2Interrupt(void) {
@@ -40,7 +40,7 @@ void setup (void) {
     
     T2CON = 0;                  //Set up timer 2 to have a delay of 100ms
     PR2 = 24999;                //and enable the interrupt for timer 2
-    T2CONbits.TCKPS = 2;
+    T2CONbits.TCKPS = 3;
     T2CONbits.TON = 1;
     _T2IE = 1;
     _T2IF = 0;
@@ -56,13 +56,15 @@ void setup (void) {
     T3CONbits.TON = 1;
     
     AD1CON1 = 0, AD1CON2 = 0, AD1CON3 = 0;
+    AD1CSSL = 0x0003;           //Set ADC1 to obtain both RA0 and RA1
     _AD1IE = 1;
     _AD1IF = 0;
     AD1CON1bits.ASAM = 1;       //Turn on automatic sampling
     AD1CON1bits.SSRC = 2;     //Use timer 3 to end sampling time
     
     AD1CON2bits.VCFG = 0;       //Configure reference voltages to be Vdd and GND
-    AD1CON2bits.SMPI = 0;     //Interrupt after completion of every conversion 
+    AD1CON2bits.SMPI = 1;     //Interrupt after completion of every 2nd conversion 
+    AD1CON2bits.CSCNA = 1;    //Enable sequential scanning on bits specified in AD1CSSL register above
     
     AD1CON3bits.SAMC = 1;       //Set Tsmp = 1*Tad
     AD1CON3bits.ADCS = 1;     //Set Tad = 2*Tcy
@@ -73,7 +75,7 @@ void setup (void) {
 double VtoI(float value) {
     //TODO: Verify this. I've done a few and the error seems to be no more than 0.5 mA
     //MAKE SURE THE ERROR IS NEVER >=1.0mA (as per project description)
-        return (double) ((value + 0.196) / 0.0335);    
+        return (double) ((value + 0.204) / 0.032);    
 }
 
 int main(void) {
@@ -85,7 +87,10 @@ int main(void) {
     
     while(1) {
         lcd_setCursor(0,0); //Setting the cursor to the top left corner of the display
-        sprintf(adStr,"%6.4f A",VtoI((3.3/1024)*adValue));      //Formatting the string that will be written
+        int curr  =VtoI((3.3/1024)*adValue);
+        if (curr < 0)
+            curr =0;
+        sprintf(adStr,"%6.4fmA",curr);      //Formatting the string that will be written
         
         lcd_printStr(adStr);         //Writing the entire string to the display    
     }
