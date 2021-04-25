@@ -75,7 +75,7 @@ void setup (void) {
 double VtoI(float value) {
     //TODO: Verify this. I've done a few and the error seems to be no more than 0.5 mA
     //MAKE SURE THE ERROR IS NEVER >=1.0mA (as per project description)
-        return (double) ((value + 0.204) / 0.032);    
+        return (double) ((value + 0.202) / 0.036);    
 }
 
 int main(void) {
